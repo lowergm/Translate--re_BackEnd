@@ -1,9 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from starlette.requests import Request
-
 
 app = FastAPI(title="Translate-re API", description="API to translate words between different languages", version="1.0.0", docs_url=None, redoc_url=None)
 

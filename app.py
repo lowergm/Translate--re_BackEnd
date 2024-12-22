@@ -1,6 +1,13 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from starlette.requests import Request
 
-app = FastAPI()
+
+app = FastAPI(title="Translate-re API", description="API to translate words between different languages", version="1.0.0", docs_url=None, redoc_url=None)
+
+templates = Jinja2Templates(directory="templates")
 
 translations = {
     "br": {
@@ -9,28 +16,31 @@ translations = {
             "bom dia": "Bonjour",
             "boa tarde": "Bon après-midi",
             "boa noite": "Bonne nuit",
-            "tchau": "Au revoir"
+            "tchau": "Au revoir",
+            "cafe": "Café"
         },
         "en": {
             "ola": "Hello",
             "bom dia": "Good morning",
             "boa tarde": "Good afternoon",
             "boa noite": "Good night",
-            "tchau": "Bye"
+            "tchau": "Bye",
+            "cafe": "Coffee"
         },
         "es": {
             "ola": "Hola",
             "bom dia": "Buenos días",
             "boa tarde": "Buenas tardes",
             "boa noite": "Buenas noches",
-            "tchau": "Adiós"
+            "tchau": "Adiós",
+            "cafe": "Café"
         },
         "it": {
             "ola": "Ciao",
             "bom dia": "Buongiorno",
             "boa tarde": "Buon pomeriggio",
             "boa noite": "Buona notte",
-            "tchau": "Addio"
+            "tchau": "Addio",
         },
         "viatinamita": {
             "ola": "Xin chào",
@@ -238,12 +248,12 @@ def home():
         return {"Message": "An error occurred"}
 
 @app.get("/database")
-def translate():
+def database():
     return translations
 
 @app.get("/translate/{idioma}/{idioma_traduzir}/{palavra}")
 def translate(idioma: str, idioma_traduzir: str, palavra: str):
     try:
-        return translations[idioma][idioma_traduzir][palavra]
+        return {"Traduction": translations[idioma][idioma_traduzir][palavra]}
     except Exception as e:
         return {"message": "Word not found in the database"}

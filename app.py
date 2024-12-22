@@ -2,8 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI(title="Translate-re API", description="API to translate words between different languages", version="1.0.0", docs_url=None, redoc_url=None)
 
-templates = Jinja2Templates(directory="templates")
-
 translations = {
     "br": {
         "fr": {
